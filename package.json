@@ -1,0 +1,21 @@
+{
+  "name": "flappy-hackathon",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "clean": "rm dist/bundle.js",
+    "start": "snowpack dev",
+    "build": "snowpack build"
+  },
+  "dependencies": {
+    "pixi.js": "^5.3.8"
+  },
+  "devDependencies": {
+    "snowpack": "^3.0.11",
+    "prettier": "^2.2.1"
+  }
+}
