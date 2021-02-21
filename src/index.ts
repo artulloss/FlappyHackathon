@@ -12,7 +12,7 @@ const HEIGHT = window.innerHeight;
 
 let app: Application;
 let bird: AnimatedSprite;
-let pipes: Sprite[];
+let pipes: Sprite[] = [];
 let sheet: Spritesheet;
 let pipeColor: string;
 
@@ -21,6 +21,42 @@ const onInteract = () => {
   for (let i = 0; i < 15; i++) {
     setTimeout(() => (bird.y -= 7), 50);
   }
+};
+
+const gravity = () => {
+  bird.y += 3;
+};
+
+const movePipes = () => {
+  for (let pipe of pipes) {
+    pipe.x -= 1;
+    if (pipe.x + pipe.width <= 0) {
+      pipe.x = app.view.width;
+    }
+  }
+};
+
+const runningLoop = () => {
+  // Gravity - Push the Bird sprite downwards
+  gravity();
+  // Move the pipes to the left, move pipe on the left once it goes out of the viewport to the right of the screen and keep cycling pipes
+  movePipes();
+  // Increment score when bird goes in between pipes
+  // Stop loop when bird collides with pipe
+};
+
+const generatePipes = () => {
+  pipes[0] = new Sprite(sheet.textures[`pipe-${pipeColor}`]);
+  pipes[1] = new Sprite(sheet.textures[`pipe-${pipeColor}`]);
+  pipes[2] = new Sprite(sheet.textures[`pipe-${pipeColor}`]);
+  pipes[3] = new Sprite(sheet.textures[`pipe-${pipeColor}`]);
+  for (let pipe of pipes) {
+    app.stage.addChild(pipe);
+  }
+};
+
+const startGame = () => {
+  // TODO - Things that should happen once the game is over and needs to be reset, or at the beginning of the game - not sure
 };
 
 const setup = () => {
@@ -48,6 +84,8 @@ const setup = () => {
   bird.animationSpeed = 0.2;
   bird.play();
 
+  generatePipes();
+
   app.ticker.add(runningLoop);
 
   bird.x = WIDTH / 2;
@@ -62,24 +100,4 @@ const setup = () => {
   startGame();
 };
 
-const startGame = () => {
-  // TODO - Things that should happen once the game is over and needs to be reset, or at the beginning of the game - not sure
-};
-
 Loader.shared.add("assets/spritesheet.json").load(setup);
-
-const gravity = () => {
-  bird.y += 3;
-};
-
-const runningLoop = () => {
-  // Gravity - Push the Bird sprite downwards
-  gravity();
-  // Move the pipes to the left, move pipe on the left once it goes out of the viewport to the right of the screen and keep cycling pipes
-  // Increment score when bird goes in between pipes
-  // Stop loop when bird collides with pipe
-};
-
-const generatePipes = () => {
-  pipes[0] = new Sprite(sheet.textures["pipe-green"]);
-};
