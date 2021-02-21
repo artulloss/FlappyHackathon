@@ -1,5 +1,5 @@
 import { Sprite, Texture } from "pixi.js";
-export default class BaseSprite {
+export class BaseSprite {
   private sprite: Sprite;
 
   constructor(public x: number, public y: number, texturePath: string) {
